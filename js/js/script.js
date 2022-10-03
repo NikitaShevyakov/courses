@@ -1,18 +1,68 @@
 "use sctrct";
 
-const numberOfFilms = prompt("Сколько фильмов вы уже посмотрели?");
+// Место для первой задачи
+function firstTask() {
+    // Пишем решение вот тут
+    for(let i=5;i <=10; i++){
+        console.log(i);
+    }   
+}
 
-const personalMovieDB = {
-    count: numberOfFilms,
-    movies: {},
-    actors: {},
-    genres: [],
-    privat: false
-};
+// Место для второй задачи
+function secondTask() {
+    // Пишем решение вот тут
+     for(let i=20; i >=10; i--){
+        if(i === 13) break;       
+        console.log(i);
+    } 
+}
 
-const lastWatchingFilm = prompt("Один из последних просмотренных фильмов?"),
-      lastWatchingFilmRating = prompt("На сколько оцените его?");
+// Место для третьей задачи
+function thirdTask() {
+    // Пишем решение вот тут
+    for(let i=1;i <=10; i++){
+        if(i%2 === 0){
+            console.log(i);
+        }
+    }  
+}
 
-personalMovieDB.movies[lastWatchingFilm] = lastWatchingFilmRating;
+// Место для четвертой задачи
 
-console.log(personalMovieDB);
+// Цикл, который нужно переписать:
+
+// for (let i = 2; i <= 16; i++) {
+//     if (i % 2 === 0) {
+//         continue;
+//     } else {
+//         console.log(i);
+//     }
+// }
+
+function fourthTask() {
+    // Пишем решение вот тут
+    
+    let i = 2;
+    while(i <= 16){
+        if (i % 2 === 0) {
+            i++;
+            continue;
+        } else {
+            console.log(i);
+            i++;
+        }
+    }
+}
+
+// Место для пятой задачи
+
+function fifthTask() {
+    const arrayOfNumbers = [];
+
+    // Пишем решение вот тут
+   for (let i = 5,j=0; i <= 10; i++,j++) {
+        arrayOfNumbers[j] = i;        
+    }  
+    // Не трогаем
+    return arrayOfNumbers;
+}
