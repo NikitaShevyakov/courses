@@ -1,69 +1,43 @@
-/* Задание на урок:
+"use strict";
 
-1) Автоматизировать вопросы пользователю про фильмы при помощи цикла
+// Место для первой задачи
+function sayHello(name) {
+    return `Привет, ${name}!`;
+}
 
-2) Сделать так, чтобы пользователь не мог оставить ответ в виде пустой строки,
-отменить ответ или ввести название фильма длинее, чем 50 символов. Если это происходит - 
-возвращаем пользователя к вопросам опять
+// Место для второй задачи
+function returnNeighboringNumbers(intVal) {
+    let arr = [];
+    arr.push(intVal - 1);
+    arr.push(intVal);
+    arr.push(intVal + 1);
+    return arr;
+}
 
-3) При помощи условий проверить  personalMovieDB.count, и если он меньше 10 - вывести сообщение
-"Просмотрено довольно мало фильмов", если от 10 до 30 - "Вы классический зритель", а если больше - 
-"Вы киноман". А если не подошло ни к одному варианту - "Произошла ошибка"
+// Место для третьей задачи
+function getMathResult(val1, val2)
+{
+    let result = `${val1}`;
 
-4) Потренироваться и переписать цикл еще двумя способами*/
-
-'use strict';
-
-// Код возьмите из предыдущего домашнего задания
-const numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели,', '');
-const personalMovieDB = {
-    count : numberOfFilms,
-    movies: {},
-    actors: {},
-    genres: {},
-    privat: false
-};
-
-for(let i = 0; i < 2; i++){
-    const a = prompt('Один из последних просмотренных фильмов?', ''),
-          b = prompt('На сколько оцените его?', '');
-
-    if(a != null && a != '' && a.length < 50 && b != null && b != '' && b.length < 50){
-        personalMovieDB.movies[a] = b;
-        console.log('done');
-    } else {
-        console.log('error');
-        i--;
+    if(typeof(val2) !== 'number' || val2 <= 0 ){
+        return val1;
     }
+
+    for(let i = 2; i <= val2; i++){
+        result = result + '---' + val1 * i;
+    }
+
+    return result;
 }
 
-// let i = 0;
-// do{
-//     const a = prompt('Один из последних просмотренных фильмов?', ''),
-//         b = prompt('На сколько оцените его?', '');
+console.log(getMathResult(5, 3)); //даст ответ 5---10---15
 
-//     if(a != null && a != '' && a.length < 50 && b != null && b != '' && b.length < 50){
-//         personalMovieDB.movies[a] = b;
-//         console.log('done');
-//     } else {
-//         console.log('error');
-//         i--;
-//     }
-//     i++;
-// }
-// while(i < 2);
+console.log(getMathResult(3, 10)); // 3---6---9---12---15---18---21---24---27---30
 
+console.log(getMathResult(10, 5)); // 10---20---30---40---50
 
-if(personalMovieDB.count < 10){
-    console.log("Просмотрено довольно мало фильмов");
-} else if (personalMovieDB.count >= 10 && personalMovieDB.count <= 30){
-    console.log("Вы классический зритель");
-} else if (personalMovieDB.count > 30){
-    console.log("Вы киноман");
-} else {
-    console.log( "Произошла ошибка");
-}
+console.log(getMathResult(10, '5')); // 10
 
+console.log(getMathResult(10, 0)); // 10
 
-console.log(personalMovieDB);
-      
+console.log(getMathResult(20, -5)); // 20
