@@ -1,48 +1,43 @@
 'use strict';
 
-// Место для первой задачи
-function calculateVolumeAndArea(length) {
-    if(typeof (length) !== 'number' || !Number.isInteger(length) || length < 0){
-        return 'При вычислении произошла ошибка';
-    }
-    let s = 6 * Math.pow(length,2);
-    let v = Math.pow(length, 3);
-    return `Объем куба: ${v}, площадь всей поверхности: ${s}`;
-}   
-
-console.log(calculateVolumeAndArea(5));// 'Объем куба: 125, площадь всей поверхности: 150'
-
-console.log(calculateVolumeAndArea(15));// 'Объем куба: 3375, площадь всей поверхности: 1350'
-
-console.log(calculateVolumeAndArea(15.5));// 'При вычислении произошла ошибка'
-
-console.log(calculateVolumeAndArea('15'));// 'При вычислении произошла ошибка'
-
-console.log(calculateVolumeAndArea(-15));// 'При вычислении произошла ошибка'
-
-// Место для второй задачи
-function getCoupeNumber(seatNumber) {
-    if (typeof (seatNumber) !== 'number' || seatNumber < 0 || !Number.isInteger(seatNumber)) {
-        return "Ошибка. Проверьте правильность введенного номера места";
-    }
-
-    if (seatNumber === 0 || seatNumber > 36) {
-        return "Таких мест в вагоне не существует";
-    }
-
-    return Math.ceil(seatNumber / 4);
+function declOfNum(number, words) {  
+    return words[(number % 100 > 4 && number % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(number % 10 < 5) ? Math.abs(number) % 10 : 5]];
 }
 
-console.log(getCoupeNumber(33)); // 9
+// Место для первой задачи
+function getTimeFromMinutes(val) {
+    let result;
 
-console.log(getCoupeNumber(7)); // 2
+    if(!typeof('number') || !Number.isInteger(val) || val < 0){
+        result = "Ошибка, проверьте данные";
+    } else {
+        const oneHour = 60;
+        let hours = Math.floor(val/oneHour);
+        let minutes = val - (hours * oneHour);   
+        let ref_hours = declOfNum(hours,[ 'час', 'часа', 'часов']);
+        let ref_minutes = declOfNum(minutes, [ 'минута', 'минуты', 'минут']);
+        result = `Это ${hours} ${ref_hours} и ${minutes} ${ref_minutes}`;
+    }    
 
-console.log(getCoupeNumber(300)); // "Таких мест в вагоне не существует"
+    return result;
+}
 
-console.log(getCoupeNumber(0)); // "Таких мест в вагоне не существует"
+console.log(getTimeFromMinutes(150)); // "Это 2 часа и 30 минут"
+console.log(getTimeFromMinutes(50)); // "Это 0 часов и 50 минут"
+console.log(getTimeFromMinutes(0)); // "Это 0 часов и 0 минут"
+console.log(getTimeFromMinutes(-150)); // "Ошибка, проверьте данные"
 
-console.log(getCoupeNumber(7.7)); // "Ошибка. Проверьте правильность введенного номера места"
+// Место для второй задачи
+function findMaxNumber(a,b,c,d) {
+    if (typeof(a) !== 'number' ||
+        typeof(b) !== 'number' ||
+        typeof(c) !== 'number' ||
+        typeof(d) !== 'number') {
+        return 0;
+    } else {
+        return Math.max(a, b ,c, d);
+    }
+}
 
-console.log(getCoupeNumber(-10)); // "Ошибка. Проверьте правильность введенного номера места"
-
-console.log(getCoupeNumber('Hello')); // "Ошибка. Проверьте правильность введенного номера места"
+console.log(findMaxNumber(1, 5, 6.6, 11)); //=>  11
+console.log(findMaxNumber(1, 5, '6', '10')); // =>  0
