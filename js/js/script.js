@@ -1,43 +1,26 @@
 'use strict';
 
-const shoppingMallData = {
-    shops: [
-        {
-            width: 10,
-            length: 5
-        },
-        {
-            width: 15,
-            length: 7
-        },
-        {
-            width: 20,
-            length: 5
-        },
-        {
-            width: 8,
-            length: 10
+const students = ['Peter', 'Andrew', 'Ann', 'Mark', 'Josh', 'Sandra', 'Cris', 'Bernard', 'Takesi', 'Sam'];
+
+function sortStudentsByGroups(arr) {
+    const a =[] , b = [], c = [], rest = [];
+    arr.sort();
+
+    arr.forEach((item, index) => {
+        
+        if(index < 3){
+            a.push(item);
+        } else if (index < 6){
+            b.push(item);
+        } else if (index < 9){
+            c.push(item);
+        } else {
+            rest.push(item);
         }
-    ],
-    height: 5,
-    moneyPer1m3: 30,
-    budget: 50000
-    
-};
 
-function isBudgetEnough(data) {
-    let square = 0;
-    let volume = 0;
-
-    data.shops.forEach(shop => {
-        square += shop.width * shop.length;
+        return [a,b,c,`Оставшиеся студенты: ${rest.length === 0 ? '-' : rest.join(', ')}`];
     });
     
-    volume = data.height * square;
-
-    return data.budget - (volume * data.moneyPer1m3) >= 0 
-        ? "Бюджета достаточно" 
-        : "Бюджета недостаточно";
+    console.log(arr);
 }
-
-isBudgetEnough(shoppingMallData);
+sortStudentsByGroups(students);
