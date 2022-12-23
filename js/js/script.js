@@ -1,53 +1,119 @@
+/* Задания на урок:
+
+1) Реализовать функционал, что после заполнения формы и нажатия кнопки "Подтвердить" - 
+новый фильм добавляется в список. Страница не должна перезагружаться.
+Новый фильм должен добавляться в movieDB.movies.
+Для получения доступа к значению input - обращаемся к нему как input.value;
+P.S. Здесь есть несколько вариантов решения задачи, принимается любой, но рабочий.
+
+2) Если название фильма больше, чем 21 символ - обрезать его и добавить три точки
+
+3) При клике на мусорную корзину - элемент будет удаляться из списка (сложно)
+
+4) Если в форме стоит галочка "Сделать любимым" - в консоль вывести сообщение: 
+"Добавляем любимый фильм"
+
+5) Фильмы должны быть отсортированы по алфавиту */
+
 'use strict';
 
-const restorantData = {
-    menu: [
-        {
-            name: 'Salad Caesar',
-            price: '14$'
-        },
-        {
-            name: 'Pizza Diavola',
-            price: '9$'
-        },
-        {
-            name: 'Beefsteak',
-            price: '17$'
-        },
-        {
-            name: 'Napoleon',
-            price: '7$'
-        }
-    ],
-    waitors: [
-        {name: 'Alice', age: 22}, {name: 'John', age: 24}
-    ],
-    averageLunchPrice: '20$',
-    openNow: true
-};
+document.addEventListener('DOMContentLoaded', () => {
+    const movieDB = {
+        movies: [
+            "Логан",
+            "Лига справедливости",
+            "Ла-ла лэнд",
+            "Одержимость",
+            "Скотт Пилигрим против..."
+        ]
+    };
+    
+    const adv = document.querySelectorAll('.promo__adv img'),
+          poster = document.querySelector('.promo__bg'),
+          genre = poster.querySelector('.promo__genre'),
+          movieList = document.querySelector('.promo__interactive-list'),
+          addForm = document.querySelector('form.add'),
+          addingInput = addForm.querySelector('.adding__input'),
+          checkbox = addForm.querySelector('input[type="checkbox"]');
+    
+    const deleteAdv = (arr) => {
+        arr.forEach(item => {
+            item.remove();
+        });
+    };
 
-function isOpen(prop) {
-    return prop ? 'Открыто' : 'Закрыто';
-}
+    const makeChanges = () => {
+        genre.textContent = "драма";
+        poster.style.backgroundImage = 'url("img/bg.jpg")';
+    };
 
-console.log(isOpen(restorantData.openNow));
+    const templateMovieItem = (name, index) => {
+        return `
+            <li class="promo__interactive-item">${index+1} ${name}
+                <div class="delete"></div>
+            </li>
+        `;
+    };
+    
+    const createMovieList = (films, parent) => {
+        parent.innerHTML = "";
+        films.forEach((film, i) => {
+            parent.innerHTML += templateMovieItem(film,i);    
+        });
+    };
 
-function isAverageLunchPriceTrue(fDish, sDish, average) {
+    const renderMovieList = () => {
+        sortArr(movieDB.movies);
+        console.log(movieDB.movies.sort());
+        createMovieList(movieDB.movies, movieList);
+        addEventListenerForDeleteBtns();
+    };
+    
+    const addMovies = () => {
+        const newFilm = addingInput.value;
 
-    if ((+fDish.price.slice(0, -1) + +sDish.price.slice(0, -1)) < +average.slice(0, -1)) {
-        return 'Цена ниже средней';
-    } else {
-        return 'Цена выше средней';
-    }
-}
+        if(newFilm){
+            let filmName = newFilm.length > 21
+                ? `${newFilm.substring(0, 22)}...`
+                : newFilm;
 
-console.log(isAverageLunchPriceTrue(restorantData.menu[3], restorantData.menu[1], restorantData.averageLunchPrice));
+            movieDB.movies.push(filmName);
 
-function transferWaitors(data) {
-    const copy = Object.assign({}, data);
+            if(checkbox.checked){
+                console.log("Сделать любимым");
+            }
+        }        
+    };
+    
+    const deleteMovie = (i) => {
+        movieDB.movies.splice(i,1);
+    };
+    
+    const addEventListenerForDeleteBtns = () => {    
+        movieList.querySelectorAll('.delete').forEach((btn, index) => {
+            btn.addEventListener('click',() => {
+                deleteMovie(index);
+                renderMovieList();
+            });
+        });
+    };
+    
+    const sortArr = (arr) => {
+        arr.sort(); 
+    };
+    
+    const initPage = () => {
+        deleteAdv(adv);    
+        renderMovieList();    
+        makeChanges();    
+        addForm.addEventListener('submit',(e) => {
+            e.preventDefault();
+            addMovies();
+            renderMovieList(); 
+            e.target.reset();           
+        });
+    };
+    
+    initPage();
+});
 
-    copy.waitors = [{name: 'Mike', age: 32}];
-    return copy;
-}
-
-transferWaitors(restorantData);
